@@ -57,7 +57,7 @@ export const slackAPIRequest = (url, botAccessToken) => async (
   return postMsgResObj;
 };
 
-export const verifyGlobals = (fetchImpl, URLSearchParamsImpl) => {
+export const verifyGlobals = (fetchImpl = null, URLSearchParamsImpl = null) => {
   if (!globalThis.fetch) {
     if (!fetchImpl) {
       throw new Error(`@sagi.io/cfw-slack: No fetch nor fetchImpl were found.`);

@@ -64,6 +64,64 @@ describe('api', () => {
     ).rejects.toEqual(new Error('not_authed'));
   });
 
+  test('verifyGlobals', () => {
+    globalThis.fetch = null;
+    globalThis.URLSearchParams = null;
+
+    let fetchImpl = null;
+    let URLSearchParamsImpl = null;
+    expect(() => api.verifyGlobals(fetchImpl, URLSearchParamsImpl)).toThrow(
+      new Error('@sagi.io/cfw-slack: No fetch nor fetchImpl were found.')
+    );
+
+    expect(() => api.verifyGlobals()).toThrow(
+      new Error('@sagi.io/cfw-slack: No fetch nor fetchImpl were found.')
+    );
+
+    fetchImpl = 1;
+    URLSearchParamsImpl = null;
+    expect(() => api.verifyGlobals(fetchImpl, URLSearchParamsImpl)).toThrow(
+      new Error(
+        '@sagi.io/cfw-slack: No URLSearchParams nor URLSearchParamsImpl were found.'
+      )
+    );
+  });
+
+  test('SlackREST', async () => {
+    const botAccessToken = 'xoxb-1234-5678-abcdefg';
+
+    const json = jest.fn();
+    const fetchMock = jest.fn(() => ({ json }));
+    globalThis.fetch = fetchMock;
+
+    globalThis.URLSearchParams = URLSearchParamsImpl;
+
+    const Slack = api.SlackREST({ botAccessToken });
+
+    json.mockReturnValueOnce({ ok: true, data: { just: 'random' } });
+
+    const method = 'chat.postMessage';
+    const channel = 'DEADBEEF';
+    const text = 'hello there';
+    const formData = { channel, text };
+
+    await get(Slack, method)(formData);
+
+    const formDataWithToken = api.addTokenToFormData(botAccessToken, formData);
+    const expectedBody = api.getBodyFromFormData(formDataWithToken);
+
+    const expectedOptions = {
+      method: 'POST',
+      headers: { 'content-type': 'application/x-www-form-urlencoded' },
+      body: expectedBody,
+    };
+
+    const expectedUrl = `https://slack.com/api/${method}`;
+    expect(globalThis.fetch).toHaveBeenCalledWith(expectedUrl, expectedOptions);
+
+    globalThis.URLSearchParams = null;
+  });
+
   describe('methods', () => {
     api.methods.map(method => {
       test(`${method}`, async () => {
