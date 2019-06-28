@@ -1,0 +1,7 @@
+*
+!/src/**.js
+!index.js
+!package.json
+!README.md
+!LICENSE
+*.test.js

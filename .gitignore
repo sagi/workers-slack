@@ -1,0 +1,5 @@
+node_modules
+coverage
+*.swp
+yarn-error.log
+lib
