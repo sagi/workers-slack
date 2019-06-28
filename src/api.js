@@ -1,7 +1,8 @@
 import '@sagi.io/globalthis';
 import merge from 'lodash.merge';
+import { utils } from './utils';
 
-export const methods = [
+export const METHODS = [
   'im.open',
   'team.info',
   'users.list',
@@ -57,7 +58,7 @@ export const slackAPIRequest = (url, botAccessToken) => async (
   return postMsgResObj;
 };
 
-export const verifyGlobals = (fetchImpl = null, URLSearchParamsImpl = null) => {
+export const setGlobals = (fetchImpl = null, URLSearchParamsImpl = null) => {
   if (!globalThis.fetch) {
     if (!fetchImpl) {
       throw new Error(`@sagi.io/cfw-slack: No fetch nor fetchImpl were found.`);
@@ -82,12 +83,16 @@ export const SlackREST = ({
   fetchImpl = null,
   URLSearchParamsImpl = null,
 }) => {
-  verifyGlobals(fetchImpl, URLSearchParamsImpl);
+  setGlobals(fetchImpl, URLSearchParamsImpl);
 
-  const methodsObjArr = methods.map(method => {
+  const methodsObjArr = METHODS.map(method => {
     const url = getSlackAPIURL(method);
     const methodAPIRequest = slackAPIRequest(url, botAccessToken);
     return dotStringToObj(method, methodAPIRequest);
   });
-  return merge(...methodsObjArr);
+
+  const SlackAPI = merge(...methodsObjArr);
+  SlackAPI.utils = utils(SlackAPI);
+
+  return SlackAPI;
 };

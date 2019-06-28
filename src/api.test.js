@@ -64,13 +64,13 @@ describe('api', () => {
     ).rejects.toEqual(new Error('not_authed'));
   });
 
-  test('verifyGlobals', () => {
+  test('setGlobals', () => {
     globalThis.fetch = null;
     globalThis.URLSearchParams = null;
 
     let fetchImpl = null;
     let URLSearchParamsImpl = null;
-    expect(() => api.verifyGlobals(fetchImpl, URLSearchParamsImpl)).toThrow(
+    expect(() => api.setGlobals(fetchImpl, URLSearchParamsImpl)).toThrow(
       new Error('@sagi.io/cfw-slack: No fetch nor fetchImpl were found.')
     );
 
@@ -122,8 +122,30 @@ describe('api', () => {
     globalThis.URLSearchParams = null;
   });
 
+  test.only('SlackREST.utils.getChannelsList', async () => {
+    const botAccessToken =
+      'xoxb-395668491318-675347817316-lW97S50hdPJU9NgvDQYVKu5d';
+    /*
+    const json = jest.fn();
+    const fetchMock = jest.fn(() => ({ json }));
+    globalThis.fetch = fetchMock;
+
+    globalThis.URLSearchParams = URLSearchParamsImpl;
+    json.mockReturnValueOnce({ ok: true, data: { just: 'random' } });
+    */
+
+    const Slack = api.SlackREST({
+      botAccessToken,
+      fetchImpl,
+      URLSearchParamsImpl,
+    });
+    const x = await Slack.utils.getChannelsList();
+
+    console.log(x);
+  });
+
   describe('methods', () => {
-    api.methods.map(method => {
+    api.METHODS.map(method => {
       test(`${method}`, async () => {
         const botAccessToken = 'xoxb-1234-5678-abcdefg';
 
