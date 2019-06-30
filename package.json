@@ -10,6 +10,7 @@
   "scripts": {
     "build:babel": "babel --ignore '**/*.test.js' src -d lib --verbose",
     "build:webpack": "webpack --display-modules ./lib",
+    "build": "npm run build:babel && npm run build:webpack",
     "test": "jest"
   },
   "dependencies": {
