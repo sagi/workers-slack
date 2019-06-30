@@ -86,11 +86,11 @@ export const setGlobals = (fetchImpl = null, URLSearchParamsImpl = null) => {
   }
 };
 
-export const SlackREST = ({
+export const SlackREST = function({
   botAccessToken = null,
   fetchImpl = null,
   URLSearchParamsImpl = null,
-} = {}) => {
+} = {}) {
   setGlobals(fetchImpl, URLSearchParamsImpl);
 
   const methodsObjArr = METHODS.map(method => {

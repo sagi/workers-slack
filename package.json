@@ -1,6 +1,6 @@
 {
   "name": "@sagi.io/cfw-slack",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Slack API for Cloudflare Workers",
   "main": "dist/main.js",
   "author": "Sagi Kedmi <git@sagi.io> (https://sagi.io)",
@@ -13,7 +13,8 @@
     "build": "npm run build:babel && npm run build:webpack",
     "lint": "eslint ./src",
     "test": "jest",
-    "prepush": "npm run lint && npm run test"
+    "prepush": "npm run lint && npm run test",
+    "prepublish": "npm run lint && npm run test"
   },
   "dependencies": {
     "@sagi.io/globalthis": "^0.0.2",
