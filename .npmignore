@@ -1,7 +1,5 @@
 *
-!/src/**.js
-!index.js
+!/dist/main.js
 !package.json
 !README.md
 !LICENSE
-*.test.js
