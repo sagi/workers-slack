@@ -3,8 +3,7 @@
 [`@sagi.io/cfw-slack`](https://www.npmjs.com/package/@sagi.io/cfw-slack) allows
 you to use Slack's Web API within Cloudflare Workers.
 
-
-[![CircleCI](https://circleci.com/gh/sagi/cfw-slack.svg?style=svg)](https://circleci.com/gh/sagi/cfw-slack)
+[![CircleCI](https://circleci.com/gh/sagi/cfw-slack.svg?style=svg&circle-token=e5282bece02d965a8fcde66d517bb599f20aa2e4)](https://circleci.com/gh/sagi/cfw-slack)
 [![MIT License](https://img.shields.io/npm/l/@sagi.io/cfw-slack.svg?style=flat-square)](http://opensource.org/licenses/MIT)
 [![version](https://img.shields.io/npm/v/@sagi.io/cfw-slack.svg?style=flat-square)](http://npm.im/@sagi.io/cfw-slack)
 
