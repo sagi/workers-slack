@@ -1,6 +1,6 @@
 {
   "name": "@sagi.io/cfw-slack",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Slack API for Cloudflare Workers",
   "main": "dist/main.js",
   "author": "Sagi Kedmi <git@sagi.io> (https://sagi.io)",
