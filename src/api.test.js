@@ -42,6 +42,7 @@ describe('api', () => {
       botAccessToken,
       formDataWithoutToken
     );
+    globalThis.URLSearchParams = URLSearchParamsImpl;
     const expectedBody = api.getBodyFromFormData(formDataWithToken);
 
     const expectedUrl = `https://slack.com/api/chat.postMessage`;

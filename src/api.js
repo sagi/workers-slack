@@ -44,7 +44,7 @@ export const slackAPIRequest = (url, botAccessToken) => async (
     );
   }
 
-  const formDataWithToken = !!botAccessToken
+  const formDataWithToken = botAccessToken
     ? addTokenToFormData(botAccessToken, formData)
     : formData;
 
