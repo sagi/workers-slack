@@ -1,6 +1,5 @@
 import '@sagi.io/globalthis';
 import merge from 'lodash.merge';
-import { utils } from './utils';
 
 export const METHODS = [
   'im.open',
@@ -39,7 +38,16 @@ export const getBodyFromFormData = formData => {
 export const slackAPIRequest = (url, botAccessToken) => async (
   formData = {}
 ) => {
-  const formDataWithToken = addTokenToFormData(botAccessToken, formData);
+  if (!botAccessToken && !formData['token']) {
+    throw new Error(
+      `@sagi.io/cfw-slack: Neither botAccessToken nor formData.token were provided.`
+    );
+  }
+
+  const formDataWithToken = !!botAccessToken
+    ? addTokenToFormData(botAccessToken, formData)
+    : formData;
+
   const body = getBodyFromFormData(formDataWithToken);
 
   const headers = { 'content-type': 'application/x-www-form-urlencoded' };
@@ -79,10 +87,10 @@ export const setGlobals = (fetchImpl = null, URLSearchParamsImpl = null) => {
 };
 
 export const SlackREST = ({
-  botAccessToken,
+  botAccessToken = null,
   fetchImpl = null,
   URLSearchParamsImpl = null,
-}) => {
+} = {}) => {
   setGlobals(fetchImpl, URLSearchParamsImpl);
 
   const methodsObjArr = METHODS.map(method => {
@@ -92,7 +100,6 @@ export const SlackREST = ({
   });
 
   const SlackAPI = merge(...methodsObjArr);
-  SlackAPI.utils = utils(SlackAPI);
 
   return SlackAPI;
 };

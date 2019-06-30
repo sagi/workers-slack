@@ -31,14 +31,17 @@ describe('api', () => {
   test('slackAPIRequest', async () => {
     const botAccessToken = 'xoxb-1234-5678-abcdefg';
     const url = 'https://slack.com/api/chat.postMessage';
-    const formData = { channel: 'CAFEBABE', text: 'hey there!' };
+    const formDataWithoutToken = { channel: 'CAFEBABE', text: 'hey there!' };
 
     const json = jest.fn();
     const fetchMock = jest.fn(() => ({ json }));
     globalThis.fetch = fetchMock;
     const resBodyJSON1 = { ok: true, data: { just: 'random' } };
 
-    const formDataWithToken = api.addTokenToFormData(botAccessToken, formData);
+    const formDataWithToken = api.addTokenToFormData(
+      botAccessToken,
+      formDataWithoutToken
+    );
     const expectedBody = api.getBodyFromFormData(formDataWithToken);
 
     const expectedUrl = `https://slack.com/api/chat.postMessage`;
@@ -51,7 +54,7 @@ describe('api', () => {
     json.mockReturnValueOnce(resBodyJSON1);
 
     await expect(
-      api.slackAPIRequest(url, botAccessToken)(formData)
+      api.slackAPIRequest(url, null)(formDataWithToken)
     ).resolves.toEqual(resBodyJSON1);
 
     expect(globalThis.fetch).toHaveBeenCalledWith(expectedUrl, expectedOptions);
@@ -60,8 +63,16 @@ describe('api', () => {
     json.mockReturnValueOnce(resBodyJSON2);
 
     await expect(
-      api.slackAPIRequest(url, botAccessToken)(formData)
+      api.slackAPIRequest(url, botAccessToken)(formDataWithoutToken)
     ).rejects.toEqual(new Error('not_authed'));
+
+    await expect(
+      api.slackAPIRequest(url, null)(formDataWithoutToken)
+    ).rejects.toEqual(
+      new Error(
+        `@sagi.io/cfw-slack: Neither botAccessToken nor formData.token were provided.`
+      )
+    );
   });
 
   test('setGlobals', () => {
@@ -74,13 +85,13 @@ describe('api', () => {
       new Error('@sagi.io/cfw-slack: No fetch nor fetchImpl were found.')
     );
 
-    expect(() => api.verifyGlobals()).toThrow(
+    expect(() => api.setGlobals()).toThrow(
       new Error('@sagi.io/cfw-slack: No fetch nor fetchImpl were found.')
     );
 
     fetchImpl = 1;
     URLSearchParamsImpl = null;
-    expect(() => api.verifyGlobals(fetchImpl, URLSearchParamsImpl)).toThrow(
+    expect(() => api.setGlobals(fetchImpl, URLSearchParamsImpl)).toThrow(
       new Error(
         '@sagi.io/cfw-slack: No URLSearchParams nor URLSearchParamsImpl were found.'
       )
@@ -96,18 +107,21 @@ describe('api', () => {
 
     globalThis.URLSearchParams = URLSearchParamsImpl;
 
-    const Slack = api.SlackREST({ botAccessToken });
+    const Slack = api.SlackREST();
 
     json.mockReturnValueOnce({ ok: true, data: { just: 'random' } });
 
     const method = 'chat.postMessage';
     const channel = 'DEADBEEF';
     const text = 'hello there';
-    const formData = { channel, text };
+    const formDataWithoutToken = { channel, text };
 
-    await get(Slack, method)(formData);
+    const formDataWithToken = api.addTokenToFormData(
+      botAccessToken,
+      formDataWithoutToken
+    );
 
-    const formDataWithToken = api.addTokenToFormData(botAccessToken, formData);
+    await get(Slack, method)(formDataWithToken);
     const expectedBody = api.getBodyFromFormData(formDataWithToken);
 
     const expectedOptions = {
@@ -122,29 +136,7 @@ describe('api', () => {
     globalThis.URLSearchParams = null;
   });
 
-  test.only('SlackREST.utils.getChannelsList', async () => {
-    const botAccessToken =
-      'xoxb-395668491318-675347817316-lW97S50hdPJU9NgvDQYVKu5d';
-    /*
-    const json = jest.fn();
-    const fetchMock = jest.fn(() => ({ json }));
-    globalThis.fetch = fetchMock;
-
-    globalThis.URLSearchParams = URLSearchParamsImpl;
-    json.mockReturnValueOnce({ ok: true, data: { just: 'random' } });
-    */
-
-    const Slack = api.SlackREST({
-      botAccessToken,
-      fetchImpl,
-      URLSearchParamsImpl,
-    });
-    const x = await Slack.utils.getChannelsList();
-
-    console.log(x);
-  });
-
-  describe('methods', () => {
+  describe('Slack Methods', () => {
     api.METHODS.map(method => {
       test(`${method}`, async () => {
         const botAccessToken = 'xoxb-1234-5678-abcdefg';
