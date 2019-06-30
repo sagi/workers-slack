@@ -20,11 +20,13 @@ Initialize `SlackREST`:
 ~~~js
 
 // Without token:
-const SlackREST = require('@sagi.io/cfw-slack')()
+const SlackREST = require('@sagi.io/cfw-slack')
+const SlackAPI = new SlackREST()
 
 // With token:
 const botAccessToken = process.env.SLACK_BOT_ACCESS_TOKEN;
-const SlackREST = require('@sagi.io/cfw-slack')({ botAccessToken })
+const SlackREST = require('@sagi.io/cfw-slack')
+const SlackAPI = new SlackREST({ botAccessToken })
 ~~~
 
 You can then use supported [Slack methods](https://api.slack.com/methods).
@@ -38,7 +40,6 @@ const formData = { channel: 'general', text: 'hello world'}
 // SlackREST wasn't initialized with a token
 const botAccessToken = process.env.SLACK_BOT_ACCESS_TOKEN;
 const formData = { token: botAcccessToken, channel: 'general', text: 'hello world' }
-
 
 const result = await SlackREST.chat.postMessage(formData)
 ~~~
