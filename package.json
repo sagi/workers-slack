@@ -1,6 +1,6 @@
 {
   "name": "@sagi.io/cfw-slack",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Slack API for Cloudflare Workers",
   "main": "dist/main.js",
   "author": "Sagi Kedmi <git@sagi.io> (https://sagi.io)",
@@ -17,13 +17,13 @@
   },
   "dependencies": {
     "@sagi.io/globalthis": "^0.0.2",
+    "lodash.merge": "^4.6.1"
+  },
+  "devDependencies": {
     "babel-eslint": "^10.0.2",
     "eslint-config-prettier": "^6.0.0",
     "eslint-plugin-jest": "^22.7.1",
     "eslint-plugin-prettier": "^3.1.0",
-    "lodash.merge": "^4.6.1"
-  },
-  "devDependencies": {
     "@babel/cli": "^7.4.4",
     "@babel/core": "^7.4.5",
     "@babel/preset-env": "^7.4.5",
@@ -42,11 +42,5 @@
     "type": "git",
     "url": "https://github.com/sagi/cfw-slack.git"
   },
-  "keywords": [
-    "cloudflare",
-    "workers",
-    "cloudflare workers",
-    "slack",
-    "rest"
-  ]
+  "keywords": ["cloudflare", "workers", "cloudflare workers", "slack", "rest"]
 }
