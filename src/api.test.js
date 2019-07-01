@@ -45,7 +45,8 @@ describe('api', () => {
     globalThis.URLSearchParams = URLSearchParamsImpl;
     const expectedBody = api.getBodyFromFormData(formDataWithToken);
 
-    const expectedUrl = `https://slack.com/api/chat.postMessage`;
+    const method = 'chat.postMessage';
+    const expectedUrl = `https://slack.com/api/${method}`;
     const expectedOptions = {
       method: 'POST',
       headers: { 'content-type': 'application/x-www-form-urlencoded' },
@@ -55,7 +56,7 @@ describe('api', () => {
     json.mockReturnValueOnce(resBodyJSON1);
 
     await expect(
-      api.slackAPIRequest(url, null)(formDataWithToken)
+      api.slackAPIRequest(method, null)(formDataWithToken)
     ).resolves.toEqual(resBodyJSON1);
 
     expect(globalThis.fetch).toHaveBeenCalledWith(expectedUrl, expectedOptions);
@@ -64,11 +65,11 @@ describe('api', () => {
     json.mockReturnValueOnce(resBodyJSON2);
 
     await expect(
-      api.slackAPIRequest(url, botAccessToken)(formDataWithoutToken)
+      api.slackAPIRequest(method, botAccessToken)(formDataWithoutToken)
     ).rejects.toEqual(new Error('not_authed'));
 
     await expect(
-      api.slackAPIRequest(url, null)(formDataWithoutToken)
+      api.slackAPIRequest(method, null)(formDataWithoutToken)
     ).rejects.toEqual(
       new Error(
         `@sagi.io/cfw-slack: Neither botAccessToken nor formData.token were provided.`
@@ -138,7 +139,40 @@ describe('api', () => {
   });
 
   describe('Slack Methods', () => {
-    api.METHODS.map(method => {
+    test(`method that doesn't require a token - oauth.access`, async () => {
+      const json = jest.fn();
+      const fetchMock = jest.fn(() => ({ json }));
+      globalThis.fetch = fetchMock;
+
+      const SlackAPIWithoutToken = api.SlackREST({
+        fetchImpl,
+        URLSearchParamsImpl,
+      });
+
+      json.mockReturnValueOnce({ ok: true, data: { just: 'random' } });
+
+      const client_id = 'DEADBEEF';
+      const client_secret = 'hello there';
+      const formDataWithoutToken = { client_id, client_secret, etc: 'etc' };
+
+      await SlackAPIWithoutToken.oauth.access(formDataWithoutToken);
+
+      const expectedBody = api.getBodyFromFormData(formDataWithoutToken);
+
+      const expectedOptions = {
+        method: 'POST',
+        headers: { 'content-type': 'application/x-www-form-urlencoded' },
+        body: expectedBody,
+      };
+
+      const expectedUrl = `https://slack.com/api/oauth.access`;
+      expect(globalThis.fetch).toHaveBeenCalledWith(
+        expectedUrl,
+        expectedOptions
+      );
+    });
+
+    Object.keys(api.METHODS).map(method => {
       test(`${method}`, async () => {
         const botAccessToken = 'xoxb-1234-5678-abcdefg';
 

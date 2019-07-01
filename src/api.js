@@ -1,19 +1,19 @@
 import '@sagi.io/globalthis';
 import merge from 'lodash.merge';
 
-export const METHODS = [
-  'im.open',
-  'team.info',
-  'users.list',
-  'dialog.open',
-  'groups.list',
-  'oauth.access',
-  'channels.list',
-  'reactions.add',
-  'apps.uninstall',
-  'chat.postMessage',
-  'chat.postEphemeral',
-];
+export const METHODS = {
+  'im.open': { token: true },
+  'team.info': { token: true },
+  'users.list': { token: true },
+  'dialog.open': { token: true },
+  'groups.list': { token: true },
+  'oauth.access': { token: false },
+  'channels.list': { token: true },
+  'reactions.add': { token: true },
+  'apps.uninstall': { token: true },
+  'chat.postMessage': { token: true },
+  'chat.postEphemeral': { token: true },
+};
 
 export const getSlackAPIURL = method => `https://slack.com/api/${method}`;
 
@@ -35,14 +35,15 @@ export const getBodyFromFormData = formData => {
   return body;
 };
 
-export const slackAPIRequest = (url, botAccessToken) => async (
+export const slackAPIRequest = (method, botAccessToken) => async (
   formData = {}
 ) => {
-  if (!botAccessToken && !formData['token']) {
+  if (!botAccessToken && (METHODS[method].token && !formData['token'])) {
     throw new Error(
       `@sagi.io/cfw-slack: Neither botAccessToken nor formData.token were provided.`
     );
   }
+  const url = getSlackAPIURL(method);
 
   const formDataWithToken = botAccessToken
     ? addTokenToFormData(botAccessToken, formData)
@@ -93,9 +94,8 @@ export const SlackREST = function({
 } = {}) {
   setGlobals(fetchImpl, URLSearchParamsImpl);
 
-  const methodsObjArr = METHODS.map(method => {
-    const url = getSlackAPIURL(method);
-    const methodAPIRequest = slackAPIRequest(url, botAccessToken);
+  const methodsObjArr = Object.keys(METHODS).map(method => {
+    const methodAPIRequest = slackAPIRequest(method, botAccessToken);
     return dotStringToObj(method, methodAPIRequest);
   });
 
