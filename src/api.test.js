@@ -30,7 +30,6 @@ describe('api', () => {
 
   test('slackAPIRequest', async () => {
     const botAccessToken = 'xoxb-1234-5678-abcdefg';
-    const url = 'https://slack.com/api/chat.postMessage';
     const formDataWithoutToken = { channel: 'CAFEBABE', text: 'hey there!' };
 
     const json = jest.fn();
