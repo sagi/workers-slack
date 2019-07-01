@@ -40,7 +40,7 @@ export const slackAPIRequest = (method, botAccessToken) => async (
 ) => {
   if (!botAccessToken && (METHODS[method].token && !formData['token'])) {
     throw new Error(
-      `@sagi.io/cfw-slack: Neither botAccessToken nor formData.token were provided.`
+      `@sagi.io/cfw-slack: Neither botAccessToken nor formData.token were provided. method: ${method}.`
     );
   }
   const url = getSlackAPIURL(method);

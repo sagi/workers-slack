@@ -71,7 +71,7 @@ describe('api', () => {
       api.slackAPIRequest(method, null)(formDataWithoutToken)
     ).rejects.toEqual(
       new Error(
-        `@sagi.io/cfw-slack: Neither botAccessToken nor formData.token were provided.`
+        `@sagi.io/cfw-slack: Neither botAccessToken nor formData.token were provided. method: chat.postMessage.`
       )
     );
   });
