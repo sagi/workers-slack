@@ -5,6 +5,7 @@ export const METHODS = {
   'im.open': { token: true },
   'team.info': { token: true },
   'users.list': { token: true },
+  'users.info': { token: true },
   'dialog.open': { token: true },
   'groups.list': { token: true },
   'oauth.access': { token: false },
