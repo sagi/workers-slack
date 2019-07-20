@@ -14,7 +14,6 @@
     "bump:push": "yarn version --patch && git push origin master --follow-tags",
     "lint": "eslint ./src",
     "test": "jest",
-    "prepush": "yarn build && yarn lint && yarn test",
     "prepublishOnly": "yarn build && yarn lint && yarn test && yarn bump:push"
   },
   "dependencies": {
@@ -32,7 +31,6 @@
     "eslint-config-prettier": "^6.0.0",
     "eslint-plugin-jest": "^22.7.1",
     "eslint-plugin-prettier": "^3.1.0",
-    "husky": "^2.7.0",
     "jest": "^24.8.0",
     "jest-junit": "^6.4.0",
     "lodash.get": "^4.4.2",
@@ -44,11 +42,5 @@
     "type": "git",
     "url": "https://github.com/sagi/cfw-slack.git"
   },
-  "keywords": [
-    "cloudflare",
-    "workers",
-    "cloudflare workers",
-    "slack",
-    "rest"
-  ]
+  "keywords": ["cloudflare", "workers", "cloudflare workers", "slack", "rest"]
 }
