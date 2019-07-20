@@ -11,10 +11,11 @@
     "build:babel": "babel --ignore '**/*.test.js' src -d lib --verbose",
     "build:webpack": "webpack --display-modules ./lib",
     "build": "yarn build:babel && yarn build:webpack",
+    "bump:push": "yarn version --patch && git push origin master --follow-tags",
     "lint": "eslint ./src",
     "test": "jest",
     "prepush": "yarn build && yarn lint && yarn test",
-    "prepublishOnly": "yarn build && yarn lint && yarn test"
+    "prepublishOnly": "yarn build && yarn lint && yarn test && yarn bump:push"
   },
   "dependencies": {
     "@sagi.io/globalthis": "^0.0.2",
