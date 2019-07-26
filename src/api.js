@@ -8,6 +8,7 @@ export const METHODS = {
   'users.info': { token: true },
   'dialog.open': { token: true },
   'groups.list': { token: true },
+  'groups.info': { token: true },
   'oauth.access': { token: false },
   'channels.list': { token: true },
   'channels.info': { token: true },
