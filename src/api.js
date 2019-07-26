@@ -10,6 +10,7 @@ export const METHODS = {
   'groups.list': { token: true },
   'oauth.access': { token: false },
   'channels.list': { token: true },
+  'channels.info': { token: true },
   'reactions.add': { token: true },
   'apps.uninstall': { token: true },
   'chat.postMessage': { token: true },
