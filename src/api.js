@@ -14,6 +14,7 @@ export const METHODS = {
   'channels.info': { token: true },
   'reactions.add': { token: true },
   'apps.uninstall': { token: true },
+  'users.identity': { token: true },
   'chat.postMessage': { token: true },
   'chat.postEphemeral': { token: true },
 };
