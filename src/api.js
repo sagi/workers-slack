@@ -17,6 +17,7 @@ export const METHODS = {
   'users.identity': { token: true },
   'chat.postMessage': { token: true },
   'chat.postEphemeral': { token: true },
+  'views.pulish': { token: true },
 };
 
 export const getSlackAPIURL = method => `https://slack.com/api/${method}`;
@@ -42,7 +43,7 @@ export const getBodyFromFormData = formData => {
 export const slackAPIRequest = (method, botAccessToken) => async (
   formData = {}
 ) => {
-  if (!botAccessToken && (METHODS[method].token && !formData['token'])) {
+  if (!botAccessToken && METHODS[method].token && !formData['token']) {
     throw new Error(
       `@sagi.io/cfw-slack: Neither botAccessToken nor formData.token were provided. method: ${method}.`
     );
