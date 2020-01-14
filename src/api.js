@@ -10,6 +10,7 @@ export const METHODS = {
   'groups.list': { token: true },
   'groups.info': { token: true },
   'oauth.access': { token: false },
+  'oauth.v2.access': { token: false },
   'channels.list': { token: true },
   'channels.info': { token: true },
   'reactions.add': { token: true },
