@@ -11,6 +11,8 @@ export const METHODS = {
   'groups.info': { token: true },
   'oauth.access': { token: false },
   'oauth.v2.access': { token: false },
+  'conversations.list': { token: true },
+  'conversations.join': { token: true },
   'channels.list': { token: true },
   'channels.info': { token: true },
   'reactions.add': { token: true },
