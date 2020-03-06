@@ -21,6 +21,9 @@ export const METHODS = {
   'chat.postMessage': { token: true },
   'chat.postEphemeral': { token: true },
   'views.publish': { token: true },
+  'views.open': { token: true },
+  'views.push': { token: true },
+  'views.update': { token: true },
 };
 
 export const getSlackAPIURL = method => `https://slack.com/api/${method}`;
