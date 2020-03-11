@@ -18,6 +18,7 @@ export const METHODS = {
   'reactions.add': { token: true },
   'apps.uninstall': { token: true },
   'users.identity': { token: true },
+  'users.profile.get': { token: true },
   'chat.postMessage': { token: true },
   'chat.postEphemeral': { token: true },
   'views.publish': { token: true },
