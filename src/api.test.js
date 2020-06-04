@@ -71,7 +71,7 @@ describe('api', () => {
       api.slackAPIRequest(method, null)(formDataWithoutToken)
     ).rejects.toEqual(
       new Error(
-        `@sagi.io/cfw-slack: Neither botAccessToken nor formData.token were provided. method: chat.postMessage.`
+        `@sagi.io/workers-slack: Neither botAccessToken nor formData.token were provided. method: chat.postMessage.`
       )
     );
   });
@@ -83,18 +83,18 @@ describe('api', () => {
     let fetchImpl = null;
     let URLSearchParamsImpl = null;
     expect(() => api.setGlobals(fetchImpl, URLSearchParamsImpl)).toThrow(
-      new Error('@sagi.io/cfw-slack: No fetch nor fetchImpl were found.')
+      new Error('@sagi.io/workers-slack: No fetch nor fetchImpl were found.')
     );
 
     expect(() => api.setGlobals()).toThrow(
-      new Error('@sagi.io/cfw-slack: No fetch nor fetchImpl were found.')
+      new Error('@sagi.io/workers-slack: No fetch nor fetchImpl were found.')
     );
 
     fetchImpl = 1;
     URLSearchParamsImpl = null;
     expect(() => api.setGlobals(fetchImpl, URLSearchParamsImpl)).toThrow(
       new Error(
-        '@sagi.io/cfw-slack: No URLSearchParams nor URLSearchParamsImpl were found.'
+        '@sagi.io/workers-slack: No URLSearchParams nor URLSearchParamsImpl were found.'
       )
     );
   });

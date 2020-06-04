@@ -54,7 +54,7 @@ export const slackAPIRequest = (method, botAccessToken) => async (
 ) => {
   if (!botAccessToken && METHODS[method].token && !formData['token']) {
     throw new Error(
-      `@sagi.io/cfw-slack: Neither botAccessToken nor formData.token were provided. method: ${method}.`
+      `@sagi.io/workers-slack: Neither botAccessToken nor formData.token were provided. method: ${method}.`
     );
   }
   const url = getSlackAPIURL(method);
@@ -84,7 +84,7 @@ export const slackAPIRequest = (method, botAccessToken) => async (
 export const setGlobals = (fetchImpl = null, URLSearchParamsImpl = null) => {
   if (!globalThis.fetch) {
     if (!fetchImpl) {
-      throw new Error(`@sagi.io/cfw-slack: No fetch nor fetchImpl were found.`);
+      throw new Error(`@sagi.io/workers-slack: No fetch nor fetchImpl were found.`);
     } else {
       globalThis.fetch = fetchImpl;
     }
@@ -93,7 +93,7 @@ export const setGlobals = (fetchImpl = null, URLSearchParamsImpl = null) => {
   if (!globalThis.URLSearchParams) {
     if (!URLSearchParamsImpl) {
       throw new Error(
-        `@sagi.io/cfw-slack: No URLSearchParams nor URLSearchParamsImpl were found.`
+        `@sagi.io/workers-slack: No URLSearchParams nor URLSearchParamsImpl were found.`
       );
     } else {
       globalThis.URLSearchParams = URLSearchParamsImpl;
