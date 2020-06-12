@@ -12,6 +12,7 @@ export const METHODS = {
   'oauth.access': { token: false },
   'oauth.v2.access': { token: false },
   'conversations.list': { token: true },
+  'conversations.info': { token: true },
   'conversations.join': { token: true },
   'conversations.open': { token: true },
   'channels.list': { token: true },
@@ -84,7 +85,9 @@ export const slackAPIRequest = (method, botAccessToken) => async (
 export const setGlobals = (fetchImpl = null, URLSearchParamsImpl = null) => {
   if (!globalThis.fetch) {
     if (!fetchImpl) {
-      throw new Error(`@sagi.io/workers-slack: No fetch nor fetchImpl were found.`);
+      throw new Error(
+        `@sagi.io/workers-slack: No fetch nor fetchImpl were found.`
+      );
     } else {
       globalThis.fetch = fetchImpl;
     }
