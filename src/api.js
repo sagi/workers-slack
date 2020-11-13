@@ -3,6 +3,7 @@ import merge from 'lodash.merge';
 
 export const METHODS = {
   'im.open': { token: true },
+  'auth.test': { token: true },
   'team.info': { token: true },
   'users.list': { token: true },
   'users.info': { token: true },
