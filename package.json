@@ -9,7 +9,7 @@
   "private": false,
   "scripts": {
     "build:babel": "babel --ignore '**/*.test.js' src -d lib --verbose",
-    "build:webpack": "webpack --display-modules ./lib",
+    "build:webpack": "webpack ./lib",
     "build": "yarn build:babel && yarn build:webpack",
     "bump:push": "yarn version --patch && git push origin master --follow-tags",
     "lint": "eslint ./src",
@@ -42,11 +42,5 @@
     "type": "git",
     "url": "https://github.com/sagi/workers-slack.git"
   },
-  "keywords": [
-    "cloudflare",
-    "workers",
-    "cloudflare workers",
-    "slack",
-    "rest"
-  ]
+  "keywords": ["cloudflare", "workers", "cloudflare workers", "slack", "rest"]
 }
