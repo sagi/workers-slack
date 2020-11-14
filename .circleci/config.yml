@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/repo
     docker:
-      - image: circleci/node:8.10
+      - image: circleci/node:12
         environment:
           TZ: "Asia/Jerusalem"
     steps:
@@ -23,7 +23,7 @@ jobs:
             - ~/.cache/yarn
       - run:
           name: yarn install
-          command: yarn install 
+          command: yarn install
       - save_cache:
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
