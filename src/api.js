@@ -7,6 +7,9 @@ export const METHODS = {
   'team.info': { token: true },
   'users.list': { token: true },
   'users.info': { token: true },
+  'users.identity': { token: true },
+  'users.profile.get': { token: true },
+  'users.conversations': { token: true },
   'dialog.open': { token: true },
   'groups.list': { token: true },
   'groups.info': { token: true },
@@ -21,8 +24,6 @@ export const METHODS = {
   'channels.info': { token: true },
   'reactions.add': { token: true },
   'apps.uninstall': { token: true },
-  'users.identity': { token: true },
-  'users.profile.get': { token: true },
   'chat.update': { token: true },
   'chat.postMessage': { token: true },
   'chat.postEphemeral': { token: true },
@@ -32,7 +33,7 @@ export const METHODS = {
   'views.update': { token: true },
 };
 
-export const getSlackAPIURL = method => `https://slack.com/api/${method}`;
+export const getSlackAPIURL = (method) => `https://slack.com/api/${method}`;
 
 export const addTokenToFormData = (botAccessToken, formData) =>
   Object.assign({}, formData, { token: botAccessToken });
@@ -46,7 +47,7 @@ export const dotStringToObj = (str, value) => {
   return obj;
 };
 
-export const getBodyFromFormData = formData => {
+export const getBodyFromFormData = (formData) => {
   const body = new URLSearchParams();
   Object.entries(formData).map(([k, v]) => body.append(k, v));
   return body;
@@ -106,14 +107,14 @@ export const setGlobals = (fetchImpl = null, URLSearchParamsImpl = null) => {
   }
 };
 
-export const SlackREST = function({
+export const SlackREST = function ({
   botAccessToken = null,
   fetchImpl = null,
   URLSearchParamsImpl = null,
 } = {}) {
   setGlobals(fetchImpl, URLSearchParamsImpl);
 
-  const methodsObjArr = Object.keys(METHODS).map(method => {
+  const methodsObjArr = Object.keys(METHODS).map((method) => {
     const methodAPIRequest = slackAPIRequest(method, botAccessToken);
     return dotStringToObj(method, methodAPIRequest);
   });
