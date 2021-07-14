@@ -10,6 +10,7 @@ export const METHODS = {
   'users.identity': { token: true },
   'users.profile.get': { token: true },
   'users.conversations': { token: true },
+  'usergroups.list': { token: true },
   'dialog.open': { token: true },
   'groups.list': { token: true },
   'groups.info': { token: true },
