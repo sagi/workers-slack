@@ -1,6 +1,6 @@
 # workers-slack
 
-[`@sagi.io/workers-slack`](https://www.npmjs.com/package/@sagi.io/workeres-slack) allows
+[`@sagi.io/workers-slack`](https://www.npmjs.com/package/@sagi.io/workers-slack) allows
 you to use Slack's Web API within Cloudflare Workers.
 
 [![CircleCI](https://circleci.com/gh/sagi/workers-slack.svg?style=svg&circle-token=e5282bece02d965a8fcde66d517bb599f20aa2e4)](https://circleci.com/gh/sagi/workers-slack)
