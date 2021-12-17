@@ -32,6 +32,7 @@ export const METHODS = {
   'views.open': { token: true },
   'views.push': { token: true },
   'views.update': { token: true },
+  'team.billing.info': { token: true },
 };
 
 export const getSlackAPIURL = (method) => `https://slack.com/api/${method}`;
@@ -54,37 +55,37 @@ export const getBodyFromFormData = (formData) => {
   return body;
 };
 
-export const slackAPIRequest = (method, botAccessToken) => async (
-  formData = {}
-) => {
-  if (!botAccessToken && METHODS[method].token && !formData['token']) {
-    throw new Error(
-      `@sagi.io/workers-slack: Neither botAccessToken nor formData.token were provided. method: ${method}.`
-    );
-  }
-  const url = getSlackAPIURL(method);
+export const slackAPIRequest =
+  (method, botAccessToken) =>
+  async (formData = {}) => {
+    if (!botAccessToken && METHODS[method].token && !formData['token']) {
+      throw new Error(
+        `@sagi.io/workers-slack: Neither botAccessToken nor formData.token were provided. method: ${method}.`
+      );
+    }
+    const url = getSlackAPIURL(method);
 
-  const formDataWithToken = botAccessToken
-    ? addTokenToFormData(botAccessToken, formData)
-    : formData;
+    const formDataWithToken = botAccessToken
+      ? addTokenToFormData(botAccessToken, formData)
+      : formData;
 
-  const body = getBodyFromFormData(formDataWithToken);
+    const body = getBodyFromFormData(formDataWithToken);
 
-  const headers = { 'content-type': 'application/x-www-form-urlencoded' };
-  const options = { method: 'POST', body, headers };
+    const headers = { 'content-type': 'application/x-www-form-urlencoded' };
+    const options = { method: 'POST', body, headers };
 
-  const postMsgRes = await fetch(url, options);
-  const postMsgResObj = await postMsgRes.json();
+    const postMsgRes = await fetch(url, options);
+    const postMsgResObj = await postMsgRes.json();
 
-  const { ok } = postMsgResObj;
+    const { ok } = postMsgResObj;
 
-  if (!ok) {
-    const { error } = postMsgResObj;
-    throw new Error(error);
-  }
+    if (!ok) {
+      const { error } = postMsgResObj;
+      throw new Error(error);
+    }
 
-  return postMsgResObj;
-};
+    return postMsgResObj;
+  };
 
 export const setGlobals = (fetchImpl = null, URLSearchParamsImpl = null) => {
   if (!globalThis.fetch) {
