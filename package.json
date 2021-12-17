@@ -42,5 +42,11 @@
     "type": "git",
     "url": "https://github.com/sagi/workers-slack.git"
   },
-  "keywords": ["cloudflare", "workers", "cloudflare workers", "slack", "rest"]
+  "keywords": [
+    "cloudflare",
+    "workers",
+    "cloudflare workers",
+    "slack",
+    "rest"
+  ]
 }
