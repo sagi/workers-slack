@@ -14,8 +14,10 @@ export const METHODS = {
   'dialog.open': { token: true },
   'groups.list': { token: true },
   'groups.info': { token: true },
-  'oauth.access': { token: false },
-  'oauth.v2.access': { token: false },
+  'oauth.access': { token: false }, // deprecated by Slack
+  'oauth.v2.access': { token: false }, // deprecated by Slack
+  'openid.connect.token': { token: false },
+  'openid.connect.userInfo': { token: true },
   'conversations.list': { token: true },
   'conversations.join': { token: true },
   'conversations.open': { token: true },
