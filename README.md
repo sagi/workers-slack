@@ -5,6 +5,9 @@ you to use Slack's Web API within Cloudflare Workers.
 
 ⭐ We use it at **[OpenSay](https://opensay.co/s=workers-slack)** to access Slack's REST API through Cloudflare Workers.
 
+Here is a [blog post](https://sagi.io/slack-api-for-cloudflare-workers/) that explains why I built it.
+
+
 [![CircleCI](https://circleci.com/gh/sagi/workers-slack.svg?style=svg&circle-token=e5282bece02d965a8fcde66d517bb599f20aa2e4)](https://circleci.com/gh/sagi/workers-slack)
 [![MIT License](https://img.shields.io/npm/l/@sagi.io/workers-slack.svg?style=flat-square)](http://opensource.org/licenses/MIT)
 [![version](https://img.shields.io/npm/v/@sagi.io/workers-slack.svg?style=flat-square)](http://npm.im/@sagi.io/workers-slack)
