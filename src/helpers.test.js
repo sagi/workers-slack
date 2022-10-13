@@ -32,7 +32,7 @@ describe('helpers', () => {
   const request = { clone, headers };
 
   test('verifyRequestSignature; all good', async () => {
-    MockDate.set(1531420617);
+    MockDate.set(1531420617000);
     await expect(
       SlackAPI.helpers.verifyRequestSignature(request, signingSecret)
     ).resolves.toBe(true);
@@ -40,14 +40,14 @@ describe('helpers', () => {
 
   test('verifyRequestSignature; older date from Slack', async () => {
     // Throws on older request date - prevent Replay Attacks.
-    MockDate.set(1541420617);
+    MockDate.set(1541420617000);
     await expect(
       SlackAPI.helpers.verifyRequestSignature(request, signingSecret)
     ).rejects.toThrowErrorMatchingSnapshot();
   });
 
   test('verifyRequestSignature; bad sig from Slack', async () => {
-    MockDate.set(1531420617);
+    MockDate.set(1531420617000);
     request.headers.set('X-Slack-Signature', 'v0=bad_sig_hash');
     await expect(
       SlackAPI.helpers.verifyRequestSignature(request, signingSecret)

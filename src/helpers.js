@@ -28,7 +28,7 @@ export const verifyRequestSignature = async (request, signingSecret) => {
   const body = await clonedRequest.text();
 
   // convert the current time to seconds (to match the API's `ts` format), then subtract 5 minutes' worth of seconds.
-  const fiveMinutesAgo = (Math.floor(Date.now() / 1000) - 60 * 5) * 1000;
+  const fiveMinutesAgo = Math.floor(Date.now() / 1000 - 60 * 5);
 
   if (requestTimestamp < fiveMinutesAgo) {
     throw new Error(
