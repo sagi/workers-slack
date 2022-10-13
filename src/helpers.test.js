@@ -20,7 +20,7 @@ describe('helpers', () => {
     'v0=a2114d57b48eac39b9ad189dd8316235a7b4a8d21a10bd27519666489c69b503';
   const headers = new Map(
     Object.entries({
-      'X-Slack-Signature': xSlackSignature,
+      'x-slack-signature': xSlackSignature,
       'X-Slack-Request-Timestamp': xSlackRequestTimestamp,
     })
   );

@@ -17,8 +17,12 @@ export const hmacSha256 = async (key, str) => {
 };
 
 export const verifyRequestSignature = async (request, signingSecret) => {
-  const requestSignature = request.headers.get('X-Slack-Signature');
-  const requestTimestamp = request.headers.get('X-Slack-Request-Timestamp');
+  const requestSignature =
+    request.headers.get('X-Slack-Signature') ||
+    request.headers.get('x-slack-signature');
+  const requestTimestamp =
+    request.headers.get('X-Slack-Request-Timestamp') ||
+    request.headers.get('x-slack-request-timestamp');
 
   const clonedRequest = request.clone();
   const body = await clonedRequest.text();
