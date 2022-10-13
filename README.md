@@ -57,7 +57,8 @@ The `SlackREST.helpers.verifyRequestSignature` method returns `true` when a sign
 
 ~~~js
 const SlackREST = require('@sagi.io/workers-slack')
+const SlackAPI = new SlackREST()
 
 const signingSecret = process.env.SLACK_SIGNING_SECRET
-const isVerifiedRequest = await SlackREST.helpers.verifyRequestSignature(request, signingSecret)
+const isVerifiedRequest = await SlackAPI.helpers.verifyRequestSignature(request, signingSecret)
 ~~~

@@ -13,7 +13,6 @@ export const buf2hex = (buf) => {
 export const hmacSha256 = async (key, str) => {
   const buf = new TextEncoder('utf-8').encode(str);
   const sig = await globalThis.crypto.subtle.sign('HMAC', key, buf);
-  console.log({ sig });
   return buf2hex(sig);
 };
 
