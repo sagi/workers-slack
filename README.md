@@ -48,3 +48,16 @@ const formData = { token: botAcccessToken, channel: 'general', text: 'hello worl
 
 const result = await SlackREST.chat.postMessage(formData)
 ~~~
+
+### Verifying requests from Slack
+
+More information [here](https://api.slack.com/authentication/verifying-requests-from-slack).
+
+The `SlackREST.helpers.verifyRequestSignature` method returns `true` when a signature from Slack is verified. Otherwise it throws an error.
+
+~~~js
+const SlackREST = require('@sagi.io/workers-slack')
+
+const signingSecret = process.env.SLACK_SIGNING_SECRET
+const isVerifiedRequest = await SlackREST.helpers.verifyRequestSignature(request, signingSecret)
+~~~

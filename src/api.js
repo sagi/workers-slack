@@ -1,5 +1,6 @@
 import '@sagi.io/globalthis';
 import merge from 'lodash.merge';
+import { verifyRequestSignature } from './helpers';
 
 export const METHODS = {
   'im.open': { token: true },
@@ -124,6 +125,8 @@ export const SlackREST = function ({
   });
 
   const SlackAPI = merge(...methodsObjArr);
+
+  SlackAPI['helpers'] = { verifyRequestSignature };
 
   return SlackAPI;
 };

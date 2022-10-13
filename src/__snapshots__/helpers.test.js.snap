@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`helpers verifyRequestSignature; bad sig from Slack 1`] = `"Slack request signing verification failed (request signature is not valid)."`;
+
+exports[`helpers verifyRequestSignature; older date from Slack 1`] = `"Slack request signing verification outdated (request is older than 5 minutes)."`;
