@@ -1,5 +1,5 @@
 module.exports = {
-  parser: 'babel-eslint',
+  parser: '@babel/eslint-parser',
   extends: ['eslint:recommended', 'prettier'],
   plugins: ['jest'],
   globals: {
@@ -12,8 +12,11 @@ module.exports = {
     globalThis: true,
     fetch: true,
     URLSearchParams: true,
+    TextEncoder: true,
+    ArrayBuffer: true,
   },
   env: {
     'jest/globals': true,
+    es6: true,
   },
 };
