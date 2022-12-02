@@ -12,6 +12,8 @@ export const METHODS = {
   'users.profile.get': { token: true },
   'users.conversations': { token: true },
   'usergroups.list': { token: true },
+  'usergroups.users.list': { token: true },
+  'usergroups.users.update': { token: true },
   'dialog.open': { token: true },
   'groups.list': { token: true },
   'groups.info': { token: true },
