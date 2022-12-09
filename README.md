@@ -20,6 +20,8 @@ $ npm i @sagi.io/workers-slack
 
 ## Cloudflare Workers Usage
 
+If you use Cloudflare's Wrangler you must set the [`node_compat`](https://developers.cloudflare.com/workers/wrangler/configuration/#inheritable-keys) flag in your `wrangler.toml` - the reason for this is that this library is built both for Cloudflare Workers and Node.js (for which we need `globals`).
+
 Initialize `SlackREST`:
 
 ~~~js
