@@ -1,50 +1,51 @@
 import '@sagi.io/globalthis';
 import merge from 'lodash.merge';
-import { verifyRequestSignature } from './helpers';
+import {verifyRequestSignature} from './helpers';
 
 export const METHODS = {
-  'im.open': { token: true },
-  'auth.test': { token: true },
-  'team.info': { token: true },
-  'users.list': { token: true },
-  'users.info': { token: true },
-  'users.identity': { token: true },
-  'users.profile.get': { token: true },
-  'users.conversations': { token: true },
-  'usergroups.list': { token: true },
-  'usergroups.users.list': { token: true },
-  'usergroups.users.update': { token: true },
-  'dialog.open': { token: true },
-  'groups.list': { token: true },
-  'groups.info': { token: true },
-  'oauth.access': { token: false }, // deprecated by Slack
-  'oauth.v2.access': { token: false }, // deprecated by Slack
-  'openid.connect.token': { token: false },
-  'openid.connect.userInfo': { token: true },
-  'conversations.list': { token: true },
-  'conversations.join': { token: true },
-  'conversations.open': { token: true },
-  'conversations.replies': { token: true },
-  'conversations.info': { token: true },
-  'channels.list': { token: true },
-  'channels.info': { token: true },
-  'reactions.add': { token: true },
-  'apps.uninstall': { token: true },
-  'chat.update': { token: true },
-  'chat.getPermalink': { token: true },
-  'chat.postMessage': { token: true },
-  'chat.postEphemeral': { token: true },
-  'views.publish': { token: true },
-  'views.open': { token: true },
-  'views.push': { token: true },
-  'views.update': { token: true },
-  'team.billing.info': { token: true },
+  'im.open': {token: true},
+  'auth.test': {token: true},
+  'team.info': {token: true},
+  'users.list': {token: true},
+  'users.info': {token: true},
+  'users.identity': {token: true},
+  'users.profile.get': {token: true},
+  'users.conversations': {token: true},
+  'usergroups.list': {token: true},
+  'usergroups.users.list': {token: true},
+  'usergroups.users.update': {token: true},
+  'dialog.open': {token: true},
+  'groups.list': {token: true},
+  'groups.info': {token: true},
+  'oauth.access': {token: false}, // deprecated by Slack
+  'oauth.v2.access': {token: false}, // deprecated by Slack
+  'openid.connect.token': {token: false},
+  'openid.connect.userInfo': {token: true},
+  'conversations.list': {token: true},
+  'conversations.join': {token: true},
+  'conversations.open': {token: true},
+  'conversations.replies': {token: true},
+  'conversations.members': {token: true},
+  'conversations.info': {token: true},
+  'channels.list': {token: true},
+  'channels.info': {token: true},
+  'reactions.add': {token: true},
+  'apps.uninstall': {token: true},
+  'chat.update': {token: true},
+  'chat.getPermalink': {token: true},
+  'chat.postMessage': {token: true},
+  'chat.postEphemeral': {token: true},
+  'views.publish': {token: true},
+  'views.open': {token: true},
+  'views.push': {token: true},
+  'views.update': {token: true},
+  'team.billing.info': {token: true},
 };
 
 export const getSlackAPIURL = (method) => `https://slack.com/api/${method}`;
 
 export const addTokenToFormData = (botAccessToken, formData) =>
-  Object.assign({}, formData, { token: botAccessToken });
+  Object.assign({}, formData, {token: botAccessToken});
 
 export const dotStringToObj = (str, value) => {
   const obj = {};
@@ -63,35 +64,35 @@ export const getBodyFromFormData = (formData) => {
 
 export const slackAPIRequest =
   (method, botAccessToken) =>
-  async (formData = {}) => {
-    if (!botAccessToken && METHODS[method].token && !formData['token']) {
-      throw new Error(
-        `@sagi.io/workers-slack: Neither botAccessToken nor formData.token were provided. method: ${method}.`
-      );
-    }
-    const url = getSlackAPIURL(method);
+    async (formData = {}) => {
+      if (!botAccessToken && METHODS[method].token && !formData['token']) {
+        throw new Error(
+          `@sagi.io/workers-slack: Neither botAccessToken nor formData.token were provided. method: ${method}.`
+        );
+      }
+      const url = getSlackAPIURL(method);
 
-    const formDataWithToken = botAccessToken
-      ? addTokenToFormData(botAccessToken, formData)
-      : formData;
+      const formDataWithToken = botAccessToken
+        ? addTokenToFormData(botAccessToken, formData)
+        : formData;
 
-    const body = getBodyFromFormData(formDataWithToken);
+      const body = getBodyFromFormData(formDataWithToken);
 
-    const headers = { 'content-type': 'application/x-www-form-urlencoded' };
-    const options = { method: 'POST', body, headers };
+      const headers = {'content-type': 'application/x-www-form-urlencoded'};
+      const options = {method: 'POST', body, headers};
 
-    const postMsgRes = await fetch(url, options);
-    const postMsgResObj = await postMsgRes.json();
+      const postMsgRes = await fetch(url, options);
+      const postMsgResObj = await postMsgRes.json();
 
-    const { ok } = postMsgResObj;
+      const {ok} = postMsgResObj;
 
-    if (!ok) {
-      const { error } = postMsgResObj;
-      throw new Error(error);
-    }
+      if (!ok) {
+        const {error} = postMsgResObj;
+        throw new Error(error);
+      }
 
-    return postMsgResObj;
-  };
+      return postMsgResObj;
+    };
 
 export const setGlobals = (fetchImpl = null, URLSearchParamsImpl = null) => {
   if (!globalThis.fetch) {
@@ -129,7 +130,7 @@ export const SlackREST = function ({
 
   const SlackAPI = merge(...methodsObjArr);
 
-  SlackAPI['helpers'] = { verifyRequestSignature };
+  SlackAPI['helpers'] = {verifyRequestSignature};
 
   return SlackAPI;
 };
