@@ -31,6 +31,7 @@ export const METHODS = {
   'reactions.add': { token: true },
   'apps.uninstall': { token: true },
   'chat.update': { token: true },
+  'chat.getPermalink': { token: true },
   'chat.postMessage': { token: true },
   'chat.postEphemeral': { token: true },
   'views.publish': { token: true },
