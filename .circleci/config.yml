@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/repo
     docker:
-      - image: circleci/node:18
+      - image: cimg/node:18.20.1
         environment:
           TZ: "Asia/Jerusalem"
     steps:
