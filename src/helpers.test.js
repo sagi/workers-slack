@@ -1,11 +1,10 @@
-import { Crypto } from 'node-webcrypto-ossl';
 import MockDate from 'mockdate';
 
 import fetchImpl from 'cross-fetch';
 import SlackREST from './index';
 
 describe('helpers', () => {
-  globalThis.crypto = new Crypto();
+  globalThis.crypto = require('node:crypto').webcrypto;
   globalThis.fetch = fetchImpl;
 
   const SlackAPI = new SlackREST();
