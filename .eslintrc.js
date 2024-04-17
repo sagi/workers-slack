@@ -3,6 +3,7 @@ module.exports = {
   extends: ['eslint:recommended', 'prettier'],
   plugins: ['jest'],
   globals: {
+    require: true,
     process: true,
     console: true,
     module: true,
