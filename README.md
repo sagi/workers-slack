@@ -3,7 +3,7 @@
 [`@sagi.io/workers-slack`](https://www.npmjs.com/package/@sagi.io/workers-slack) allows
 you to use Slack's Web API within Cloudflare Workers.
 
-⭐ We use it at **[OpenSay](https://opensay.co/s=workers-slack)** to access Slack's REST API through Cloudflare Workers.
+⭐ We use it at **[OpenSay](https://opensay.co/?s=workers-slack)** to access Slack's REST API through Cloudflare Workers.
 
 Here is a [blog post](https://sagi.io/slack-api-for-cloudflare-workers/) that explains why I built it.
 
